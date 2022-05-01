@@ -10,11 +10,9 @@ class BinarySearchTree
     depth = 0
   	if @root == nil 
       @root = Node.new(score, movie)
-      depth = 0
     else 
       current_node = @root
       previous_node = @root
-
       while current_node != nil 
         previous_node = current_node
         if current_node.data.values[0] > score 
@@ -25,7 +23,6 @@ class BinarySearchTree
           depth +=1
         end
       end
-
       if previous_node.data.values[0] > score
         previous_node.left = Node.new(score, movie)
       else
@@ -46,22 +43,20 @@ class BinarySearchTree
   else
     return true
   end
-  # current_node = @root
-  # previous_node = @root
-
-  # while current_node != nil 
-  #   previous_node = current_node
-  #   if current_node.data.values[0] == score
-  #     return true
-  #   elsif current_node.data.values[0] > score
-  #     current_node = previous_node.left
-  #   else 
-  #     current_node = previous_node.right
-  #   end
-  # end
-  # false
  end
 
- def depth_of
+ def depth_of(score, node = self.root, depth = 0)
+  if node == nil 
+    return nil 
+  elsif node.data.values[0] > score
+    depth += 1
+    return depth_of(score, node = node.left, depth)
+  elsif node.data.values[0] < score
+    depth += 1
+    return depth_of(score, node = node.right, depth)
+  else 
+    return depth 
+  end
+
  end
 end
