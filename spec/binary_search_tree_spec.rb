@@ -39,4 +39,13 @@ RSpec.describe BinarySearchTree do
     expect(tree.depth_of(50)).to eq 2
     expect(tree.depth_of(28)).to eq nil 
   end
+
+  it 'returns the data of movie with max score' do 
+    tree.insert(61, "Bill & Ted's Excellent Adventure")
+    tree.insert(16, "Johnny English")
+    tree.insert(92, "Sharknado 3")
+    tree.insert(50, "Hannibal Buress: Animal Furnace")
+
+    expect(tree.max).to eq({"Sharknado 3" => 92})
+  end
 end
