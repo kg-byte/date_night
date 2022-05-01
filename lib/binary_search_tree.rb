@@ -36,22 +36,32 @@ class BinarySearchTree
   end
 
 
- def include?(score)
-  current_node = @root
-  previous_node = @root
-
-  while current_node != nil 
-    previous_node = current_node
-    if current_node.data.values[0] == score
-      return true
-    elsif current_node.data.values[0] > score
-      current_node = previous_node.left
-    else 
-      current_node = previous_node.right
-    end
+ def include?(score, node = self.root)
+  if node == nil
+    return false
+  elsif node.data.values[0] > score
+    return include?(score, node.left)
+  elsif node.data.values[0] < score 
+    return include?(score, node.right)
+  else
+    return true
   end
-  false
+  # current_node = @root
+  # previous_node = @root
+
+  # while current_node != nil 
+  #   previous_node = current_node
+  #   if current_node.data.values[0] == score
+  #     return true
+  #   elsif current_node.data.values[0] > score
+  #     current_node = previous_node.left
+  #   else 
+  #     current_node = previous_node.right
+  #   end
+  # end
+  # false
  end
 
- 
+ def depth_of
+ end
 end
