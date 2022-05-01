@@ -25,6 +25,7 @@ class BinarySearchTree
           depth +=1
         end
       end
+
       if previous_node.data.values[0] > score
         previous_node.left = Node.new(score, movie)
       else
@@ -34,4 +35,23 @@ class BinarySearchTree
     depth
   end
 
+
+ def include?(score)
+  current_node = @root
+  previous_node = @root
+
+  while current_node != nil 
+    previous_node = current_node
+    if current_node.data.values[0] == score
+      return true
+    elsif current_node.data.values[0] > score
+      current_node = previous_node.left
+    else 
+      current_node = previous_node.right
+    end
+  end
+  false
+ end
+
+ 
 end
