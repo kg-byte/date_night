@@ -66,5 +66,14 @@ class BinarySearchTree
     end
     return max(node = node.right)
   end
-  
+
+  def min(node = self.root)
+    if node == nil 
+      return nil 
+    elsif node.left == nil 
+      return node.data
+    end
+    return min(node = node.left)
+  end
+
 end
