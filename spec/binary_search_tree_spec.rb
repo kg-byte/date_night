@@ -70,4 +70,9 @@ RSpec.describe BinarySearchTree do
  {"Sharknado 3"=>92}])
   end
 
+  it 'load txt data and creates binary_search_tree' do 
+    expect(tree.load('./data/movies.txt')).to eq(6)
+
+  end
+
 end

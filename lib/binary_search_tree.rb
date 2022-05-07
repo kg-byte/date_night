@@ -63,4 +63,15 @@ class BinarySearchTree
     sort(movies_asc, node.right) if node.right
     movies_asc.compact
   end
+
+  def load(dir)
+    lines = File.readlines(dir)
+    n = 0
+    lines.each do |line|
+      data=line.delete("\n").split(',')
+      insert(data[0],data[1])
+      n+=1
+    end
+    n
+  end
 end
