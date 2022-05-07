@@ -17,7 +17,6 @@ class BinarySearchTree
     depth_of(score)
   end
 
-
   def find_parent(score)
     current_node = previous_node =  @root
     while current_node 
@@ -53,5 +52,15 @@ class BinarySearchTree
     return nil if !node
     return node.data if !node.left 
     return min(node = node.left)
+  end
+
+  def sort(movies_asc = [], node = @root)
+    movies_asc << node.data if !movies_asc.include?(node.data)
+    index = movies_asc.find_index(node.data)
+    movies_asc.insert(index, node.left.data) if node.left
+    movies_asc.insert(index+2,node.right.data) if node.right
+    sort(movies_asc, node.left) if node.left
+    sort(movies_asc, node.right) if node.right
+    movies_asc.compact
   end
 end

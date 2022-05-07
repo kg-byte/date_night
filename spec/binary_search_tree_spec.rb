@@ -57,4 +57,17 @@ RSpec.describe BinarySearchTree do
 
     expect(tree.min).to eq({"Johnny English" => 16})
   end
+
+  it 'returns the data of movie with min score' do 
+    tree.insert(50, "Hannibal Buress: Animal Furnace")
+    tree.insert(61, "Bill & Ted's Excellent Adventure")
+    tree.insert(16, "Johnny English")
+    tree.insert(92, "Sharknado 3")
+
+    expect(tree.sort).to eq([{"Johnny English"=>16},
+  {"Hannibal Buress: Animal Furnace"=>50},
+  {"Bill & Ted's Excellent Adventure"=>61},
+ {"Sharknado 3"=>92}])
+  end
+
 end
