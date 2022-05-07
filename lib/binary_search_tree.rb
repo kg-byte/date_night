@@ -6,74 +6,52 @@ class BinarySearchTree
     @root = nil
   end
 
-  def insert(score, movie)
-    depth = 0
-  	if @root == nil 
+  def insert(score, movie, depth = 0)
+    if !@root 
       @root = Node.new(score, movie)
     else 
-      current_node = @root
-      previous_node = @root
-      while current_node != nil 
-        previous_node = current_node
-        if current_node.data.values[0] > score 
-          current_node = previous_node.left
-          depth +=1
-        else 
-          current_node = previous_node.right
-          depth +=1
-        end
-      end
-      if previous_node.data.values[0] > score
-        previous_node.left = Node.new(score, movie)
-      else
-        previous_node.right = Node.new(score, movie)
-      end
+      parent_node = find_parent(score)
+      parent_node.left = Node.new(score, movie) if parent_node.score > score
+      parent_node.right = Node.new(score, movie) if parent_node.score < score
     end
-    depth
+    depth_of(score)
+  end
+
+
+  def find_parent(score)
+    current_node = previous_node =  @root
+    while current_node 
+      previous_node = current_node
+      current_node = previous_node.left if previous_node.score > score 
+      current_node = previous_node.right if previous_node.score < score 
+    end
+    previous_node
   end
 
   def include?(score, node = self.root)
-    if node == nil
-      return false
-    elsif node.data.values[0] > score
-      return include?(score, node.left)
-    elsif node.data.values[0] < score 
-      return include?(score, node.right)
-    else
-      return true
-    end
+    return false if !node 
+    return include?(score, node.left) if node.score > score
+    return include?(score, node.right) if node.score < score 
+    return true
   end
 
   def depth_of(score, node = self.root, depth = 0)
-    if node == nil 
-      return nil 
-    elsif node.data.values[0] > score
-      depth += 1
-      return depth_of(score, node = node.left, depth)
-    elsif node.data.values[0] < score
-      depth += 1
-      return depth_of(score, node = node.right, depth)
-    else 
-      return depth 
-    end
+    return nil if !node
+    return depth if node.score == score
+    depth +=1
+    return depth_of(score, node = node.left, depth) if node.score > score
+    return depth_of(score, node = node.right, depth) if node.score < score
   end
 
   def max(node = self.root)
-    if node == nil 
-      return nil 
-    elsif node.right == nil 
-      return node.data
-    end
+    return nil if !node 
+    return node.data if !node.right
     return max(node = node.right)
   end
 
   def min(node = self.root)
-    if node == nil 
-      return nil 
-    elsif node.left == nil 
-      return node.data
-    end
+    return nil if !node
+    return node.data if !node.left 
     return min(node = node.left)
   end
-
 end
