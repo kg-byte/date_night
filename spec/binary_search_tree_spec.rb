@@ -71,8 +71,20 @@ RSpec.describe BinarySearchTree do
   end
 
   it 'load txt data and creates binary_search_tree' do 
-    expect(tree.load('./data/movies.txt')).to eq(6)
-
+    expect(tree.load('./db/data/movies_sample.txt')).to eq(6)
   end
 
+  it 'reports the health of tree' do 
+    tree.insert(98, "Animals United")
+    tree.insert(58, "Armageddon")
+    tree.insert(36, "Bill & Ted's Bogus Journey")
+    tree.insert(93, "Bill & Ted's Excellent Adventure")
+    tree.insert(86, "Charlie's Angels")
+    tree.insert(38, "Charlie's Country")
+    tree.insert(69, "Collateral Damage")
+
+    expect(tree.health(0)).to eq([[98, 7, 100]])
+    expect(tree.health(1)).to eq([[58, 6, 85]])
+    expect(tree.health(2)).to eq([[36, 2, 28], [93, 3, 42]])
+  end
 end
