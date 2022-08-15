@@ -1,7 +1,7 @@
 require 'node'
 
 class BinarySearchTree
-  attr_accessor :root, :depth
+  attr_accessor :root
   def initialize
     @root = nil
   end
@@ -9,10 +9,17 @@ class BinarySearchTree
   def insert(score, movie, depth = 0)
     if !@root 
       @root = Node.new(score, movie)
+      @root.depth = 0
     else 
       parent_node = find_parent(score)
-      parent_node.left = Node.new(score, movie) if parent_node.score > score
-      parent_node.right = Node.new(score, movie) if parent_node.score < score
+      if parent_node.score > score
+        parent_node.left = Node.new(score, movie)
+        new_node = parent_node.left
+      else
+        parent_node.right = Node.new(score, movie)
+        new_node = parent_node.right
+      end
+      new_node.depth = depth_of(score)
     end
     depth_of(score)
   end
@@ -73,5 +80,36 @@ class BinarySearchTree
       n+=1
     end
     n
+  end
+
+  def all_nodes(nodes = [], node = @root)
+    nodes << node if !nodes.include?(node)
+    all_nodes(nodes, node.left) if node.left
+    all_nodes(nodes, node.right) if node.right 
+    nodes
+  end
+
+  def find_nodes(depth)
+    all_nodes.select {|node| node.depth == depth}
+  end
+
+  def num_of_children(node, num = 1)
+    num += 1 if node.left
+    num += 1 if node.right
+    num = num_of_children(node.left, num) if node.left
+    num = num_of_children(node.right, num) if node.right  
+    num
+  end
+
+  def health(depth)
+    current_nodes = find_nodes(depth)
+    total_nodes = all_nodes.count
+    result = []
+    if current_nodes != []
+      current_nodes.each do |node|
+        result << [node.score, num_of_children(node), (100*num_of_children(node)/total_nodes).floor]
+      end
+    end
+    result
   end
 end
